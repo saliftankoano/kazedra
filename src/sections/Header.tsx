@@ -33,7 +33,7 @@ export const Header: React.FC<HeaderProp> = ({
           <div className="flex items-center justify-between">
             <Image src={Logo} alt="saas logo" height={60} width={60} />
             <MenuIcon className="h-5 w-5 md:hidden" />
-            <nav className="hidden md:flex gap-6 text-black/60 items-center">
+            <nav className=" md:flex gap-6 text-black/60 items-center">
               <a className="hover:cursor-pointer" onClick={onWhy}>
                 Why
               </a>

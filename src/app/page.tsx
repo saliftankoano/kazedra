@@ -8,7 +8,6 @@ import { Pricing } from "@/sections/Pricing";
 import { Testimonials } from "@/sections/Testimonials";
 import { useRef } from "react";
 import { Why } from "@/sections/Why";
-import Head from "next/head";
 import Hotjar from "@hotjar/browser";
 
 const siteId = 5123508;
