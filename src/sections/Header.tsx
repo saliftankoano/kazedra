@@ -32,15 +32,24 @@ export const Header: React.FC<HeaderProp> = ({
         <div className="container">
           <div className="flex items-center justify-between">
             <Image src={Logo} alt="saas logo" height={60} width={60} />
-            <MenuIcon className="h-5 w-5 md:hidden" />
+            {/*<MenuIcon className="h-5 w-5 md:hidden" />*/}
             <nav className=" md:flex gap-6 text-black/60 items-center">
-              <a className="hover:cursor-pointer" onClick={onWhy}>
+              <a
+                className="hidden lg:block hover:cursor-pointer"
+                onClick={onWhy}
+              >
                 Why
               </a>
-              <a className="hover:cursor-pointer" onClick={onPricing}>
+              <a
+                className="hidden lg:block hover:cursor-pointer"
+                onClick={onPricing}
+              >
                 Pricing
               </a>
-              <a className="hover:cursor-pointer" onClick={onTestimonials}>
+              <a
+                className="hidden lg:block hover:cursor-pointer"
+                onClick={onTestimonials}
+              >
                 Testimonials
               </a>
               <button
