@@ -53,6 +53,11 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://www.kazedra.com/",
   },
+  verification: {
+    other: {
+      "facebook-domain-verification": "wpfp0w3vrwe2w4jmsdt9sehxwzmzn7",
+    },
+  },
 };
 
 export default function RootLayout({
