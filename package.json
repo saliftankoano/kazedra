@@ -34,7 +34,7 @@
     "@types/node-fetch": "^2.6.11",
     "@types/react": "^18",
     "@types/react-dom": "^18",
-    "eslint": "^8",
+    "eslint": "^9.39.2",
     "eslint-config-next": "^16.1.6",
     "postcss": "^8",
     "tailwind-merge": "^2.5.2",
