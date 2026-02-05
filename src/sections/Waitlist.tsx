@@ -1,21 +1,26 @@
 "use client";
-import ArrowRight from "@/assets/arrow-right.svg";
 import Star from "@/assets/star.png";
 import Spring from "@/assets/spring.png";
-import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { FormEvent, useRef, useState } from "react";
+import { FormEvent, useRef, useState, useEffect } from "react";
+import { twMerge } from "tailwind-merge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Check } from "lucide-react";
-import fetch from "node-fetch";
+import { Check, Mail, Phone, MapPin } from "lucide-react";
+
 type refProp = {
   refProp: React.RefObject<HTMLDivElement>;
 };
+
 export const Waitlist: React.FC<refProp> = ({ refProp }) => {
-  const [email, setEmail] = useState<string>("none");
-  const [isSuccessful, setIsSuccessful] = useState<Boolean>(false);
+  const [email, setEmail] = useState<string>("");
+  const [isSuccessful, setIsSuccessful] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   const validateEmail = (email: string): boolean => {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -26,105 +31,123 @@ export const Waitlist: React.FC<refProp> = ({ refProp }) => {
     e.preventDefault();
     if (validateEmail(email)) {
       setError("");
-      sub();
+      // Placeholder for subscription logic
+      setIsSuccessful(true);
     } else {
-      setError("Please enter a valid email address");
+      setError("Veuillez entrer une adresse email valide");
     }
   };
+
   const sectionRef = useRef(null);
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start end", "end start"],
   });
   const translateY = useTransform(scrollYProgress, [0, 1], [150, -150]);
-  const sub = () => {
-    if (email != "none") {
-      const url = `https://a.klaviyo.com/client/subscriptions/?company_id=${process.env.NEXT_PUBLIC_KLAVIYO_API}`;
-      const options = {
-        method: "POST",
-        headers: { revision: "2024-07-15", "content-type": "application/json" },
-        body: JSON.stringify({
-          data: {
-            type: "subscription",
-            attributes: {
-              profile: {
-                data: {
-                  type: "profile",
-                  attributes: { email: email },
-                },
-              },
-            },
-            relationships: {
-              list: {
-                data: { type: "list", id: process.env.NEXT_PUBLIC_LIST },
-              },
-            },
-          },
-        }),
-      };
-      fetch(url, options)
-        .then((res) => {
-          if (res.status == 202) {
-            setIsSuccessful(true);
-          }
-          console.log(res.status);
-        })
-        .catch((err) => {
-          setIsSuccessful(false);
-          console.error("error:" + err);
-        });
-    }
-  };
+
   return (
     <section
       ref={refProp}
       className="bg-gradient-to-b from-white to-[#D2DCFF] py-24 overflow-x-clip"
     >
       <div ref={sectionRef} className="container">
-        <div className="section-heading relative">
-          <h2 className="section-title">Join the Waitlist Today</h2>
-          <p className="section-description mt-5">
-            Be among the first to experience effortless outfits every day. Join
-            now and get early access to a smarter way to dress.
-          </p>
-
-          <motion.img
-            src={Star.src}
-            alt="star image"
-            width={360}
-            className="absolute -left-[350px] -top-[137px]"
-            style={{ translateY }}
-          />
-          <motion.img
-            src={Spring.src}
-            alt="spring image"
-            width={360}
-            className="absolute -right-[331px] -top-[19px]"
-            style={{ translateY }}
-          />
-        </div>
-
-        <div className="flex gap-2 mt-10 justify-center">
-          {isSuccessful ? (
-            <div className="flex w-full font-bold max-w-sm justify-center items-center space-x-2">
-              Thank you, you&apos;re in!
-              <Check color="green" />
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div className="relative">
+            <div className="section-heading text-left mx-0 max-w-none">
+              <h2 className="section-title text-left">Contactez-nous</h2>
+              <p className="section-description text-left mt-5">
+                Vous avez un projet ou souhaitez en savoir plus sur nos
+                solutions ? Notre équipe est à votre écoute.
+              </p>
             </div>
-          ) : (
-            <form onSubmit={handleSubmit} className="w-full max-w-sm space-x-2">
-              <div className="inline-flex w-full gap-6">
-                <Input
-                  type="email"
-                  placeholder="Email"
-                  value={email == "none" ? "" : email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className={error ? "border-red-500" : ""}
-                />
-                <Button type="submit">Join Waitlist</Button>
+
+            <div className="mt-10 space-y-6">
+              <div className="flex items-center gap-4">
+                <div className="bg-[#FF6B35] p-3 rounded-full text-white">
+                  <MapPin className="h-6 w-6" />
+                </div>
+                <div>
+                  <p className="font-bold">Siège Social</p>
+                  <p className="text-black/70">
+                    Ouagadougou, BP 01 BP 6594 OUAGA CNT 10020
+                  </p>
+                </div>
               </div>
-              <div>{error && <p className="text-red-500">{error}</p>}</div>
-            </form>
-          )}
+
+              <div className="flex items-center gap-4">
+                <div className="bg-[#FF6B35] p-3 rounded-full text-white">
+                  <Phone className="h-6 w-6" />
+                </div>
+                <div>
+                  <p className="font-bold">Téléphone</p>
+                  <p className="text-black/70">+226 78 53 95 52</p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-4">
+                <div className="bg-[#FF6B35] p-3 rounded-full text-white">
+                  <Mail className="h-6 w-6" />
+                </div>
+                <div>
+                  <p className="font-bold">Email</p>
+                  <p className="text-black/70">contact@kazedra.com</p>
+                </div>
+              </div>
+            </div>
+
+            <motion.img
+              src={Star.src}
+              alt="star image"
+              width={360}
+              className="absolute -left-[350px] -top-[137px] opacity-20"
+              style={{ translateY: isMounted ? translateY : 0 }}
+            />
+          </div>
+
+          <div className="card bg-white p-10 shadow-2xl max-w-none">
+            <h3 className="text-2xl font-bold mb-6 text-center">
+              Restez informé
+            </h3>
+            <p className="text-center text-black/60 mb-8">
+              Inscrivez-vous à notre newsletter pour suivre l&apos;actualité de
+              Kazedra et le lancement de nos nouveaux produits.
+            </p>
+
+            {isSuccessful ? (
+              <div className="flex flex-col items-center justify-center py-10 space-y-4">
+                <div className="bg-green-100 p-4 rounded-full">
+                  <Check className="h-10 w-10 text-green-600" />
+                </div>
+                <p className="text-xl font-bold text-center">
+                  Merci, vous êtes inscrit !
+                </p>
+              </div>
+            ) : (
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <div>
+                  <Input
+                    type="email"
+                    placeholder="Votre adresse email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className={twMerge(
+                      "h-14 text-lg",
+                      error ? "border-red-500" : ""
+                    )}
+                  />
+                  {error && (
+                    <p className="text-red-500 mt-2 text-sm">{error}</p>
+                  )}
+                </div>
+                <Button
+                  type="submit"
+                  className="w-full h-14 text-lg bg-black hover:bg-black/80"
+                >
+                  S&apos;inscrire à la newsletter
+                </Button>
+              </form>
+            )}
+          </div>
         </div>
       </div>
     </section>

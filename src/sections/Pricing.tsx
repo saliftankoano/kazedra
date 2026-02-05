@@ -1,170 +1,82 @@
 "use client";
 import { twMerge } from "tailwind-merge";
-import CheckIcon from "@/assets/check.svg";
 import { motion } from "framer-motion";
-import { useEffect } from "react";
-const pricingTiers = [
-  {
-    title: "Free",
-    monthlyPrice: 0,
-    priceId: "",
-    buttonText: "Join waitlist",
-    popular: false,
-    inverse: false,
-    features: ["Up to 50 clothing items"],
-  },
-  {
-    title: "Premium",
-    monthlyPrice: 9,
-    priceId: "price_1Pv3WnB6K2WVrIh2UXXJMBHA",
-    buttonText: "Pre order",
-    popular: true,
-    inverse: true,
-    features: [
-      "On body model",
-      "Priority support",
-      "2 Daily Weather based outfit",
-      "Up to 100 clothing items",
-    ],
-  },
-  {
-    title: "Star",
-    monthlyPrice: 19,
-    priceId: "price_1Pv3cXB6K2WVrIh2hsOMKFsM",
-    buttonText: "Pre order",
-    popular: false,
-    inverse: false,
-    features: [
-      "Virtual try-on",
-      "On body model",
-      "Priority support",
-      "AI clothing care assistant",
-      "3 Daily Weather based outfit",
-      "Unlimited clothing items",
-    ],
-  },
+import Image from "next/image";
+
+import roogoPreview from "@/assets/home-roogo.png";
+
+const roogoFeatures = [
+  "Annonces 100% vérifiées",
+  "Élimination des faux démarcheurs",
+  "Interface simple et intuitive",
+  "Support local dédié",
+  "Paiement sécurisé mobile money",
+  "Visites virtuelles HD",
 ];
+
 type refProp = {
   refProp: React.RefObject<HTMLDivElement>;
   onJoin: () => void;
 };
+
 export const Pricing: React.FC<refProp> = ({ refProp, onJoin }) => {
-  useEffect(() => {
-    // Check to see if this is a redirect back from Checkout
-    const query = new URLSearchParams(window.location.search);
-    if (query.get("success")) {
-      console.log("Order placed! You will receive an email confirmation.");
-    }
-
-    if (query.get("canceled")) {
-      console.log(
-        "Order canceled -- continue to shop around and checkout when you’re ready."
-      );
-    }
-  }, []);
-
   return (
     <section ref={refProp} className="py-24 bg-white">
       <div className="container">
         <div className="section-heading">
-          <h2 className="section-title">Pricing</h2>
+          <div className="flex justify-center">
+            <div className="tag border-[#FF6B35] text-black">
+              Notre Produit Phare
+            </div>
+          </div>
+          <h2 className="section-title mt-5">Roogo Burkina</h2>
           <p className="section-description mt-5">
-            First <strong>1000 users</strong> get early access.
-            <br />
-            Pre-order a Premium or Star Package before our official Launch and
-            get a<strong> free month</strong> on us.
+            La plateforme immobilière nouvelle génération conçue pour éliminer
+            la fraude et simplifier la vie des Burkinabè.
           </p>
         </div>
-      </div>
-      <div className="cards flex flex-col gap-6 items-center mt-10 lg:flex-row lg:items-end lg:justify-center">
-        {pricingTiers.map(
-          (
-            {
-              title,
-              monthlyPrice,
-              priceId,
-              buttonText,
-              popular,
-              inverse,
-              features,
-            },
-            key
-          ) => (
-            <div
-              className={twMerge(
-                "card",
-                inverse == true && "border-black bg-black text-white"
-              )}
-              key={key}
-            >
-              <div className="flex justify-between">
-                <h3
-                  className={twMerge(
-                    "text-lg font-bold text-black/50",
-                    inverse == true && "text-white/60"
-                  )}
-                >
-                  {title}
-                </h3>
-                {popular === true && (
-                  <div className="inline-flex text-sm px-4 py-1.5 rounded-xl border border-white/20">
-                    <motion.span
-                      animate={{ backgroundPositionX: "100%" }}
-                      transition={{
-                        duration: 1,
-                        repeat: Infinity,
-                        ease: "linear",
-                        repeatType: "loop",
-                      }}
-                      className="bg-[linear-gradient(to_right,#DD7DDF,#E1CD86,#BBCB92,#71C2EF,#3BFFFF,#DD7DDF,#E1CD86,#BBCB92,#71C2EF,#3BFFFF)] [background-size:200%] text-transparent bg-clip-text font-medium"
-                    >
-                      Popular
-                    </motion.span>
-                  </div>
-                )}
-              </div>
 
-              <div className="flex items-baseline gap-1 mt-[30px]">
-                <span className="text-4xl font-bold tracking-tighter leading-none">
-                  ${monthlyPrice}
-                </span>
-                <span className="tracking-tight text-black/50">/month</span>
-              </div>
-              {priceId != "" ? (
-                <form
-                  action={`/api/checkout_sessions?priceId=${priceId}`}
-                  method="POST"
-                >
-                  <button
-                    className={twMerge(
-                      "btn btn-primary justify-center w-full mt-[30px]",
-                      inverse == true && "bg-white text-black font-bold"
-                    )}
-                    role="link"
-                  >
-                    {buttonText}
-                  </button>
-                </form>
-              ) : (
-                <button
-                  className="btn btn-primary justify-center w-full mt-[30px]"
-                  onClick={onJoin}
-                >
-                  {buttonText}
-                </button>
-              )}
-
-              <ul className="flex-col gap-5 mt-8">
-                {features.map((feature, key) => (
-                  <li key={key} className="text-sm flex items-center gap-4">
-                    <CheckIcon className="h-6 w-6" />
+        <div className="mt-16 flex flex-col lg:flex-row gap-12 items-center">
+          <div className="lg:w-1/2">
+            <div className="card border-black bg-black text-white p-12 w-full max-w-none">
+              <h3 className="text-3xl font-bold mb-6">Pourquoi Roogo ?</h3>
+              <p className="text-white/70 mb-8 text-lg">
+                Roogo est né d&apos;une volonté de protéger les citoyens contre
+                les mauvaises expériences et les arnaques des intermédiaires
+                indélicats dans le secteur immobilier.
+              </p>
+              <ul className="flex flex-col gap-5">
+                {roogoFeatures.map((feature, key) => (
+                  <li key={key} className="text-lg flex items-center gap-4">
+                    <span className="text-[#FF6B35]">✓</span>
                     <span>{feature}</span>
                   </li>
                 ))}
               </ul>
+              <button
+                onClick={onJoin}
+                className="btn bg-[#FF6B35] text-white justify-center w-full mt-10 text-lg py-4"
+              >
+                Découvrir Roogo
+              </button>
             </div>
-          )
-        )}
+          </div>
+
+          <div className="lg:w-1/2 relative flex justify-center items-center">
+            <div className="relative rounded-[3rem] overflow-hidden shadow-2xl border-8 border-white w-full max-w-[320px] aspect-[9/19.5]">
+              <Image
+                src={roogoPreview}
+                alt="Roogo App Preview"
+                fill
+                className="object-cover"
+              />
+            </div>
+
+            {/* Decorative elements */}
+            <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-[#FF6B35] rounded-full -z-10 blur-3xl opacity-20"></div>
+            <div className="absolute -top-6 -left-6 w-32 h-32 bg-[#FF6B35] rounded-full -z-10 blur-3xl opacity-10"></div>
+          </div>
+        </div>
       </div>
     </section>
   );

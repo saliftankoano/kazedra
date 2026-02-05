@@ -3,17 +3,11 @@ import { Waitlist } from "@/sections/Waitlist";
 import { Footer } from "@/sections/Footer";
 import { Header } from "@/sections/Header";
 import { Hero } from "@/sections/Hero";
-import { LogoTicker } from "@/sections/LogoTicker";
 import { Pricing } from "@/sections/Pricing";
 import { Testimonials } from "@/sections/Testimonials";
 import { useRef } from "react";
 import { Why } from "@/sections/Why";
-import Hotjar from "@hotjar/browser";
 
-const siteId = 5123508;
-const hotjarVersion = 6;
-
-Hotjar.init(siteId, hotjarVersion);
 export default function Home() {
   const pricingRef = useRef<HTMLDivElement | null>(null);
   const testimonialsRef = useRef<HTMLDivElement | null>(null);
@@ -61,7 +55,6 @@ export default function Home() {
         onTestimonials={scrollToTestimonials}
       />
       <Hero onJoin={scrollToWaitlist} />
-      <LogoTicker />
       <Why refProp={whyRef} />
       <Pricing refProp={pricingRef} onJoin={scrollToWaitlist} />
       <Testimonials refProp={testimonialsRef} />

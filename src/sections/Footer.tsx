@@ -1,9 +1,9 @@
-import Logo from "@/assets/kazedra.png";
+import Logo from "@/assets/Kazedra-transparent-blanc.png";
 import SocialX from "@/assets/social-x.svg";
 import SocialInsta from "@/assets/social-insta.svg";
 import SocialLinkedin from "@/assets/social-linkedin.svg";
-import SocialPin from "@/assets/social-pin.svg";
 import SocialYoutube from "@/assets/social-youtube.svg";
+import { Linkedin, Facebook, Instagram, Youtube } from "lucide-react";
 
 import Image from "next/image";
 type HeaderProp = {
@@ -21,66 +21,75 @@ export const Footer: React.FC<HeaderProp> = ({
   return (
     <footer className="bg-black text-[#BCBCBC] text-sm py-10 text-center">
       <div className="container">
-        <div className="inline-flex relative before:content-[''] before:top-2 before:bottom-0 before:blur before:w-full before:bg-[linear-gradient(to_right,#F87BFF,#FB92CF,#FFDD9B,#C2F0B1,#2FD8FE)] before:absolute">
-          <Image src={Logo} alt="saas logo" height={40} className="relative" />
+        <div className="inline-flex relative">
+          <Image
+            src={Logo}
+            alt="Kazedra logo"
+            height={160}
+            width={160}
+            className="relative h-40 w-40"
+          />
         </div>
         <nav className="flex flex-col md:flex-row md:justify-center gap-6 mt-6">
+          <a
+            className="hover:cursor-pointer"
+            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          >
+            Accueil
+          </a>
           <a className="hover:cursor-pointer" onClick={onWhy}>
-            Why
+            Services
           </a>
           <a className="hover:cursor-pointer" onClick={onPricing}>
-            Pricing
+            Roogo
           </a>
           <a className="hover:cursor-pointer" onClick={onTestimonials}>
-            Testimonials
+            Équipe
           </a>
           <a className="hover:cursor-pointer" onClick={onJoin}>
-            Join
+            Contact
           </a>
         </nav>
         <div className="socials flex justify-center gap-6 mt-6">
           <a
+            href="https://www.linkedin.com/company/kazedra/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:scale-125 hover:cursor-pointer text-white/60 hover:text-white transition-colors"
+          >
+            <Linkedin className="h-6 w-6" />
+          </a>
+          <a
             href="https://www.facebook.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:scale-125 hover:cursor-pointer"
+            className="hover:scale-125 hover:cursor-pointer text-white/60 hover:text-white transition-colors"
           >
-            <SocialX />
+            <Facebook className="h-6 w-6" />
           </a>
           <a
             href="https://www.instagram.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:scale-125 hover:cursor-pointer"
+            className="hover:scale-125 hover:cursor-pointer text-white/60 hover:text-white transition-colors"
           >
-            <SocialInsta />
-          </a>
-          <a
-            href="https://www.linkedin.com/company/kazedra/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hover:scale-125 hover:cursor-pointer"
-          >
-            <SocialLinkedin />
-          </a>
-          <a
-            href="https://www.pinterest.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hover:scale-125 hover:cursor-pointer"
-          >
-            <SocialPin />
+            <Instagram className="h-6 w-6" />
           </a>
           <a
             href="https://www.youtube.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:scale-125 hover:cursor-pointer"
+            className="hover:scale-125 hover:cursor-pointer text-white/60 hover:text-white transition-colors"
           >
-            <SocialYoutube />
+            <Youtube className="h-6 w-6" />
           </a>
         </div>
-        <p className="mt-6">&copy; 2024 Kazedra Inc. All rights reserved</p>
+        <p className="mt-6">
+          &copy; 2024-2026 Kazedra Technologies SARL. Tous droits réservés.
+        </p>
+        <p className="mt-2 text-white/40 italic">
+          Passion, Simplicité, Courage
+        </p>
       </div>
     </footer>
   );
