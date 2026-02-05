@@ -118,3 +118,5 @@
 //     return NextResponse.json({ error: "Something went wrong" });
 //   }
 // }
+
+export {};
