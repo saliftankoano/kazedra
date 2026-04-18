@@ -54,7 +54,7 @@ export function VisitesBenefits() {
           variants={{
             hidden: {},
             visible: {
-              transition: { delayChildren: 0.1, staggerChildren: 0.08 },
+              transition: { delayChildren: 0.05, staggerChildren: 0.14 },
             },
           }}
           className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-16"
@@ -63,16 +63,26 @@ export function VisitesBenefits() {
             <motion.div
               key={n}
               variants={{
-                hidden: reduce ? { opacity: 0 } : { opacity: 0, y: 24 },
-                visible: { opacity: 1, y: 0 },
+                hidden: reduce ? { opacity: 0 } : { opacity: 0, y: 40 },
+                visible: {
+                  opacity: 1,
+                  y: 0,
+                  transition: { duration: 0.75, ease: [0.16, 1, 0.3, 1] },
+                },
               }}
-              transition={{ duration: 0.3, ease: "easeOut" }}
-              className="rounded-3xl border border-black/10 bg-white p-8 md:p-10 shadow-[0_7px_14px_#EAEAEA] hover:shadow-xl hover:-translate-y-1 transition-all"
+              whileHover={reduce ? {} : { y: -8 }}
+              whileTap={reduce ? {} : { scale: 0.98 }}
+              transition={{ type: "spring", stiffness: 300, damping: 22 }}
+              className="group rounded-3xl border border-black/10 bg-white p-8 md:p-10 shadow-[0_7px_14px_#EAEAEA] hover:shadow-2xl hover:border-[#FF6B35]/20 transition-shadow cursor-default"
             >
-              <div className="text-6xl md:text-7xl font-black text-[#FF6B35] tracking-tighter leading-none">
+              <motion.div
+                className="text-6xl md:text-7xl font-black text-[#FF6B35] tracking-tighter leading-none"
+                whileHover={reduce ? {} : { scale: 1.08 }}
+                transition={{ type: "spring", stiffness: 400, damping: 18 }}
+              >
                 {n}
-              </div>
-              <h3 className="text-xl md:text-2xl font-bold mt-6 mb-3 tracking-tight leading-tight">
+              </motion.div>
+              <h3 className="text-xl md:text-2xl font-bold mt-6 mb-3 tracking-tight leading-tight group-hover:text-[#FF6B35] transition-colors duration-200">
                 {title}
               </h3>
               <p className="text-black/65 leading-relaxed">{body}</p>

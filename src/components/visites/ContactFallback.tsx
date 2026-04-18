@@ -4,12 +4,13 @@ import Image, { type StaticImageData } from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
 import { MessageCircle, PhoneCall } from "lucide-react";
 import moovLogo from "@/assets/moov-money.png";
-import orangeLogo from "@/assets/orange-money.png";
+import orangeLogo from "@/assets/orange-icon.png";
 
 type Line = {
   carrier: string;
   logo: StaticImageData;
   logoBg: string;
+  imgCls: string;
   display: string;
   tel: string;
   wa: string;
@@ -20,6 +21,7 @@ const LINES: Line[] = [
     carrier: "Moov",
     logo: moovLogo,
     logoBg: "bg-white",
+    imgCls: "h-full w-full object-contain",
     display: "+226 53 11 11 19",
     tel: "tel:+22653111119",
     wa: "https://wa.me/22653111119",
@@ -27,7 +29,8 @@ const LINES: Line[] = [
   {
     carrier: "Orange",
     logo: orangeLogo,
-    logoBg: "bg-[#FF6600]",
+    logoBg: "bg-white",
+    imgCls: "h-full w-full object-contain",
     display: "+226 67 00 61 16",
     tel: "tel:+22667006116",
     wa: "https://wa.me/22667006116",
@@ -59,21 +62,21 @@ export function ContactFallback() {
           </p>
 
           <div className="mt-7 grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-xl mx-auto">
-            {LINES.map(({ carrier, logo, logoBg, display, tel, wa }) => (
+            {LINES.map(({ carrier, logo, logoBg, imgCls, display, tel, wa }) => (
               <div
                 key={display}
                 className="rounded-2xl border border-black/10 bg-white p-5 text-left"
               >
                 <div className="flex items-center gap-3">
                   <div
-                    className={`h-11 w-11 rounded-xl ${logoBg} border border-black/5 flex items-center justify-center overflow-hidden shrink-0`}
+                    className={`h-12 w-12 rounded-xl ${logoBg} border border-black/5 overflow-hidden shrink-0`}
                   >
                     <Image
                       src={logo}
                       alt={`${carrier} Money`}
-                      width={44}
-                      height={44}
-                      className="h-full w-full object-contain"
+                      width={48}
+                      height={48}
+                      className={imgCls}
                     />
                   </div>
                   <div>

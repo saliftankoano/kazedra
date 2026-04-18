@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  motion,
-  useScroll,
-  useSpring,
-  useTransform,
-  useReducedMotion,
-} from "framer-motion";
+import { motion, useScroll, useSpring, useTransform, useReducedMotion } from "framer-motion";
 import { useRef } from "react";
 import { Calendar, Camera, Link as LinkIcon } from "lucide-react";
 
@@ -82,21 +76,18 @@ export function VisitesProcess() {
           </svg>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-6">
-            {steps.map(({ icon: Icon, title, body }, idx) => (
-              <motion.div
-                key={title}
-                initial={reduce ? { opacity: 0 } : { opacity: 0, y: 28 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.5 }}
-                transition={{ duration: 0.5, delay: idx * 0.12 }}
-                className="flex flex-col items-center text-center"
-              >
-                <div className="h-20 w-20 rounded-full bg-white border-2 border-[#FF6B35] text-[#FF6B35] flex items-center justify-center shadow-[0_8px_20px_rgba(255,107,53,0.2)] mb-6 relative z-10">
+            {steps.map(({ icon: Icon, title, body }) => (
+              <div key={title} className="flex flex-col items-center text-center">
+                <motion.div
+                  whileHover={reduce ? {} : { scale: 1.1, rotate: 6 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 18 }}
+                  className="h-20 w-20 rounded-full bg-white border-2 border-[#FF6B35] text-[#FF6B35] flex items-center justify-center shadow-[0_8px_20px_rgba(255,107,53,0.2)] mb-6 relative z-10 cursor-default"
+                >
                   <Icon className="h-9 w-9" strokeWidth={1.8} />
-                </div>
+                </motion.div>
                 <h3 className="text-xl font-bold mb-2">{title}</h3>
                 <p className="text-black/65 max-w-[280px]">{body}</p>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>

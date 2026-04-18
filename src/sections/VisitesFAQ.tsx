@@ -40,7 +40,37 @@ export function VisitesFAQ() {
   const [open, setOpen] = useState<number | null>(0);
 
   return (
-    <section className="py-24 bg-gradient-to-b from-[#EAEEFE] to-white">
+    <section className="relative py-24 bg-gradient-to-b from-[#EAEEFE] to-white overflow-hidden">
+      {/* Left decoration — large soft ring */}
+      <svg
+        aria-hidden="true"
+        className="pointer-events-none absolute -left-24 top-1/2 -translate-y-1/2 w-72 h-72 opacity-[0.12]"
+        viewBox="0 0 288 288"
+        fill="none"
+      >
+        <circle cx="144" cy="144" r="120" stroke="#FF6B35" strokeWidth="32" />
+        <circle cx="144" cy="144" r="60" stroke="#FF6B35" strokeWidth="12" />
+      </svg>
+
+      {/* Right decoration — dot grid */}
+      <svg
+        aria-hidden="true"
+        className="pointer-events-none absolute -right-8 top-16 w-48 h-64 opacity-[0.18]"
+        viewBox="0 0 192 256"
+        fill="#FF6B35"
+      >
+        {Array.from({ length: 6 }).map((_, row) =>
+          Array.from({ length: 4 }).map((_, col) => (
+            <circle
+              key={`${row}-${col}`}
+              cx={col * 40 + 16}
+              cy={row * 44 + 16}
+              r="5"
+            />
+          ))
+        )}
+      </svg>
+
       <div className="container">
         <div className="section-heading">
           <div className="flex justify-center">
