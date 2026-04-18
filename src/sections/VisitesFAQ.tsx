@@ -1,6 +1,6 @@
 "use client";
 
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { Plus } from "lucide-react";
 import { useState } from "react";
 
@@ -37,7 +37,7 @@ const faqs = [
 
 export function VisitesFAQ() {
   const reduce = useReducedMotion();
-  const [open, setOpen] = useState<number | null>(0);
+  const [open, setOpen] = useState<number | null>(null);
 
   return (
     <section className="relative py-24 bg-gradient-to-b from-[#EAEEFE] to-white overflow-hidden">
@@ -79,7 +79,7 @@ export function VisitesFAQ() {
           <h2 className="section-title mt-5">Vos questions, nos réponses</h2>
         </div>
 
-        <div className="mt-14 max-w-3xl mx-auto flex flex-col gap-3">
+        <div className="mt-14 max-w-3xl mx-auto flex flex-col gap-3 pb-2">
           {faqs.map((item, i) => {
             const isOpen = open === i;
             return (
@@ -102,22 +102,15 @@ export function VisitesFAQ() {
                     <Plus className="h-4 w-4" />
                   </motion.span>
                 </button>
-                <AnimatePresence initial={false}>
-                  {isOpen && (
-                    <motion.div
-                      key="content"
-                      initial={reduce ? { height: "auto" } : { height: 0 }}
-                      animate={{ height: "auto" }}
-                      exit={reduce ? { height: "auto" } : { height: 0 }}
-                      transition={{ duration: 0.22, ease: "easeOut" }}
-                      className="overflow-hidden"
-                    >
-                      <div className="px-5 pb-5 text-black/65 leading-relaxed">
-                        {item.a}
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+                <div
+                  className={`grid transition-[grid-template-rows] ${reduce ? "duration-0" : "duration-200"} ease-out ${isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}
+                >
+                  <div className="overflow-hidden">
+                    <div className="px-5 pb-5 text-black/65 leading-relaxed">
+                      {item.a}
+                    </div>
+                  </div>
+                </div>
               </div>
             );
           })}

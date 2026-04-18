@@ -29,9 +29,11 @@ function scrollToBooking(withRoogo: boolean) {
   } catch {
     // noop
   }
-  document
-    .getElementById("booking")
-    ?.scrollIntoView({ behavior: "smooth", block: "start" });
+  const el = document.getElementById("booking");
+  if (el) {
+    const y = el.getBoundingClientRect().top + window.scrollY + 160;
+    window.scrollTo({ top: y, behavior: "smooth" });
+  }
 }
 
 export function VisitesPricing() {
