@@ -80,7 +80,7 @@ export const Waitlist: React.FC<refProp> = ({ refProp }) => {
                 </div>
                 <div>
                   <p className="font-bold">Téléphone</p>
-                  <p className="text-black/70">+226 78 53 95 52</p>
+                  <p className="text-black/70">+226 53 11 11 19 / 67 00 61 16</p>
                 </div>
               </div>
 

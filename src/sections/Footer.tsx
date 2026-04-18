@@ -60,6 +60,9 @@ export const Footer: React.FC<FooterProp> = ({
               <Link href="/#contact" className="hover:text-white transition-colors">Contact</Link>
             </>
           )}
+          <Link href="/visites-3d" className="hover:text-white transition-colors">
+            Visites 3D
+          </Link>
           <Link href="/realisations" className="hover:text-white transition-colors">
             Réalisations
           </Link>

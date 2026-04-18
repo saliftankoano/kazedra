@@ -43,9 +43,6 @@ export const metadata: Metadata = {
       },
     ],
   },
-  icons: {
-    icon: "./K-simple.png",
-  },
   robots: {
     index: true,
     follow: true,
