@@ -8,12 +8,7 @@ import { SlotList } from "@/components/booking/SlotList";
 import { BookingForm } from "@/components/booking/BookingForm";
 import { SuccessState } from "@/components/booking/SuccessState";
 import { PaymentModal } from "@/components/booking/PaymentModal";
-import {
-  PRICE_SCAN_ONLY,
-  PRICE_SCAN_WITH_ROOGO,
-  SLOTS,
-  type Slot,
-} from "@/lib/time-slots";
+import { computePrice, SLOTS, type Slot } from "@/lib/time-slots";
 import type { BookingInput } from "@/lib/booking-schema";
 
 type BookedMap = Record<string, string[]>;
@@ -176,11 +171,10 @@ export function VisitesBooking() {
           isOpen={!!pendingBooking}
           onClose={() => setPendingBooking(null)}
           booking={pendingBooking}
-          amount={
+          amount={computePrice(
+            pendingBooking.room_count,
             pendingBooking.with_roogo
-              ? PRICE_SCAN_WITH_ROOGO
-              : PRICE_SCAN_ONLY
-          }
+          )}
           date={date}
           slot={slot}
           onSuccess={() => {

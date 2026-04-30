@@ -15,7 +15,11 @@ There are no test commands configured in this project.
 
 ## Architecture
 
-This is a Next.js 15 (App Router) landing page for Kazedra Technologies, a software company based in Burkina Faso. The primary product featured is **Roogo**, a clothing generation tool.
+This is the Next.js 15 (App Router) marketing site for **Kazedra Technologies**, a Burkinabè software company. The home page (`src/app/page.tsx`) is the company landing page. The site also markets Kazedra's productized **3D virtual tour service** at `/visites-3d` (self-serve calendar booking + Mobile Money payment).
+
+Kazedra's main consumer product is **Roogo**, a rental marketplace for residential and commercial properties in Burkina Faso (Android Feb 2026, iOS Apr 2026). Roogo's mobile app code lives in a separate repo — not this one. This site references Roogo as a bundled add-on in the `/visites-3d` pricing (Scan + Roogo bundle).
+
+The home page's section structure (`Hero → LogoTicker → Why → Pricing → Testimonials → Waitlist → Footer`) was originally built as the waitlist for an AI clothing-generation product, since pivoted. The disabled RunPod/ComfyUI route at `src/app/api/generate/route.ts` and the `RUNPOD_API_KEY` env var are leftovers from that era.
 
 ### Page Structure
 

@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { SLOTS, AREA_BANDS } from "./time-slots";
+import { SLOTS } from "./time-slots";
 
 const phoneRegex = /^(\+?226)?[\s-]?[0-9]{2}[\s-]?[0-9]{2}[\s-]?[0-9]{2}[\s-]?[0-9]{2}$/;
 
@@ -19,7 +19,11 @@ export const bookingSchema = z.object({
     .optional()
     .or(z.literal("")),
   address: z.string().trim().min(4, "Adresse trop courte").max(500),
-  area_band: z.enum(AREA_BANDS, { message: "Superficie invalide" }),
+  room_count: z
+    .number()
+    .int()
+    .min(1, "Au moins 1 pièce")
+    .max(50, "Plus de 50 pièces ? Contactez-nous."),
   with_roogo: z.boolean(),
   notes: z.string().trim().max(2000).optional().or(z.literal("")),
 });

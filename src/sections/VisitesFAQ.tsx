@@ -10,6 +10,10 @@ const faqs = [
     a: "Environ 2 heures pour un bien de taille standard. Les grandes propriétés peuvent prendre un peu plus de temps — nous vous le confirmons au moment de la réservation.",
   },
   {
+    q: "Comment est calculé le tarif ?",
+    a: "10 000 FCFA par pièce (7 500 FCFA avec le forfait Roogo, soit 25 % de réduction). Une pièce = un espace à capturer : chambre, salon, salle à manger, bar, zone privée, etc. Le total est calculé selon le nombre de pièces que vous saisissez à la réservation et débité par Mobile Money au moment de confirmer le créneau.",
+  },
+  {
     q: "Dans quelle zone intervenez-vous ?",
     a: "Pour le moment, uniquement à Ouagadougou. Nous étendrons le service à d'autres villes dans les prochains mois.",
   },

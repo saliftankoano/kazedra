@@ -8,18 +8,14 @@ export const SLOTS = [
 
 export type Slot = (typeof SLOTS)[number];
 
-export const AREA_BANDS = ["<100", "100-200", "200-500", ">500"] as const;
-export type AreaBand = (typeof AREA_BANDS)[number];
+export const PRICE_PER_ROOM = 10_000;
+export const PRICE_PER_ROOM_WITH_ROOGO = 7_500; // 25% off
+export const ROOGO_DISCOUNT_PCT = 25;
 
-export const AREA_BAND_LABELS: Record<AreaBand, string> = {
-  "<100": "Moins de 100 m²",
-  "100-200": "100 à 200 m²",
-  "200-500": "200 à 500 m²",
-  ">500": "Plus de 500 m²",
-};
-
-export const PRICE_SCAN_ONLY = 50000;
-export const PRICE_SCAN_WITH_ROOGO = 30000;
+export function computePrice(roomCount: number, withRoogo: boolean): number {
+  const rate = withRoogo ? PRICE_PER_ROOM_WITH_ROOGO : PRICE_PER_ROOM;
+  return Math.max(1, Math.floor(roomCount)) * rate;
+}
 
 export function formatDateISO(d: Date): string {
   const y = d.getFullYear();

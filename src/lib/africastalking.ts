@@ -74,9 +74,11 @@ export function teamNotificationMessage(input: {
   slot: string;
   address: string;
   with_roogo: boolean;
+  room_count: number;
+  total_amount: number;
 }): string {
   const who = input.company ? `${input.name} (${input.company})` : input.name;
-  const tarif = input.with_roogo ? "30k (Roogo)" : "50k";
+  const tarif = `${input.total_amount.toLocaleString("fr-FR")} FCFA · ${input.room_count}p${input.with_roogo ? " (Roogo)" : ""}`;
   return `Nouvelle reservation 3D: ${who} / ${input.phone} / ${input.date} ${input.slot} / ${input.address} / ${tarif}`;
 }
 
@@ -96,6 +98,8 @@ export async function sendTeamNotification(payload: {
   slot: string;
   address: string;
   with_roogo: boolean;
+  room_count: number;
+  total_amount: number;
 }): Promise<void> {
   const to = process.env.TEAM_PHONE;
   if (!to) return;

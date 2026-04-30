@@ -2,7 +2,11 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowRight, Check } from "lucide-react";
-import { PRICE_SCAN_ONLY, PRICE_SCAN_WITH_ROOGO } from "@/lib/time-slots";
+import {
+  PRICE_PER_ROOM,
+  PRICE_PER_ROOM_WITH_ROOGO,
+  ROOGO_DISCOUNT_PCT,
+} from "@/lib/time-slots";
 
 const standardFeatures = [
   "Scan 3D complet du bien",
@@ -16,7 +20,7 @@ const roogoFeatures = [
   "Publication de votre annonce sur Roogo",
   "Mise en avant de la visite 3D",
   "Assistance pour la rédaction de l'annonce",
-  "Économie de 20 000 FCFA",
+  `Économisez ${ROOGO_DISCOUNT_PCT} %`,
 ];
 
 function scrollToBooking(withRoogo: boolean) {
@@ -72,13 +76,16 @@ export function VisitesPricing() {
             <p className="text-black/60 mt-1">Idéal pour les agences</p>
             <div className="mt-6">
               <span className="text-5xl font-bold tracking-tight whitespace-nowrap">
-                {PRICE_SCAN_ONLY.toLocaleString("fr-FR")}
+                {PRICE_PER_ROOM.toLocaleString("fr-FR")}
               </span>
               <span className="text-2xl font-bold tracking-tight ml-1.5 text-black/80">
                 FCFA
               </span>
-              <span className="text-black/50 ml-2">/ bien</span>
+              <span className="text-black/50 ml-2">/ pièce</span>
             </div>
+            <p className="mt-2 text-sm text-black/55">
+              Tarif uniforme · aucun minimum
+            </p>
             <ul className="mt-8 space-y-3">
               {standardFeatures.map((f) => (
                 <li key={f} className="flex items-start gap-3 text-black/80">
@@ -113,7 +120,7 @@ export function VisitesPricing() {
                   Populaire
                 </span>
                 <span className="text-white/60 text-sm">
-                  Économisez 20 000 FCFA
+                  Économisez {ROOGO_DISCOUNT_PCT} %
                 </span>
               </div>
               <h3 className="text-2xl font-bold mt-4 group-hover:text-[#FF6B35] transition-colors duration-200">
@@ -124,13 +131,16 @@ export function VisitesPricing() {
               </p>
               <div className="mt-6">
                 <span className="text-5xl font-bold tracking-tight whitespace-nowrap">
-                  {PRICE_SCAN_WITH_ROOGO.toLocaleString("fr-FR")}
+                  {PRICE_PER_ROOM_WITH_ROOGO.toLocaleString("fr-FR")}
                 </span>
                 <span className="text-2xl font-bold tracking-tight ml-1.5 text-white/80">
                   FCFA
                 </span>
-                <span className="text-white/50 ml-2">/ bien</span>
+                <span className="text-white/50 ml-2">/ pièce</span>
               </div>
+              <p className="mt-2 text-sm text-white/60">
+                Tarif uniforme · aucun minimum
+              </p>
               <ul className="mt-8 space-y-3">
                 {roogoFeatures.map((f) => (
                   <li key={f} className="flex items-start gap-3">

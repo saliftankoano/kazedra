@@ -6,13 +6,11 @@ import { format, parseISO } from "date-fns";
 import { fr } from "date-fns/locale";
 import { cn } from "@/lib/utils";
 import {
-  AREA_BANDS,
-  AREA_BAND_LABELS,
+  computePrice,
   formatFCFA,
-  PRICE_SCAN_ONLY,
-  PRICE_SCAN_WITH_ROOGO,
+  PRICE_PER_ROOM,
+  PRICE_PER_ROOM_WITH_ROOGO,
   type Slot,
-  type AreaBand,
 } from "@/lib/time-slots";
 import { bookingSchema, type BookingInput } from "@/lib/booking-schema";
 
@@ -32,7 +30,7 @@ function blank(withRoogo = false) {
     phone: "",
     email: "",
     address: "",
-    area_band: "100-200" as AreaBand,
+    room_count: 1,
     with_roogo: withRoogo,
     notes: "",
   };
@@ -48,7 +46,10 @@ export function BookingForm({
   const [values, setValues] = useState(blank(initialWithRoogo));
   const [errors, setErrors] = useState<FieldErrors>({});
 
-  const price = values.with_roogo ? PRICE_SCAN_WITH_ROOGO : PRICE_SCAN_ONLY;
+  const price = computePrice(values.room_count, values.with_roogo);
+  const perRoomRate = values.with_roogo
+    ? PRICE_PER_ROOM_WITH_ROOGO
+    : PRICE_PER_ROOM;
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
@@ -89,6 +90,10 @@ export function BookingForm({
           <div className="text-sm text-black/50">Tarif</div>
           <div className="text-xl font-bold text-[#FF6B35]">
             {formatFCFA(price)}
+          </div>
+          <div className="text-xs text-black/45 mt-0.5">
+            {values.room_count} pièce{values.room_count > 1 ? "s" : ""} ×{" "}
+            {formatFCFA(perRoomRate)}
           </div>
         </div>
       </div>
@@ -154,20 +159,27 @@ export function BookingForm({
           </Field>
         </div>
 
-        <Field label="Superficie approximative" error={errors.area_band} required>
-          <select
-            className={input(errors.area_band)}
-            value={values.area_band}
-            onChange={(e) =>
-              setValues({ ...values, area_band: e.target.value as AreaBand })
-            }
-          >
-            {AREA_BANDS.map((b) => (
-              <option key={b} value={b}>
-                {AREA_BAND_LABELS[b]}
-              </option>
-            ))}
-          </select>
+        <Field label="Nombre de pièces" error={errors.room_count} required>
+          <input
+            type="number"
+            min={1}
+            max={50}
+            step={1}
+            inputMode="numeric"
+            className={input(errors.room_count)}
+            value={values.room_count}
+            onChange={(e) => {
+              const n = parseInt(e.target.value, 10);
+              setValues({
+                ...values,
+                room_count: Number.isFinite(n) && n > 0 ? n : 1,
+              });
+            }}
+          />
+          <span className="text-xs text-black/50 mt-1">
+            Une pièce = un espace à capturer (chambre, salon, bar, salle…).{" "}
+            {formatFCFA(PRICE_PER_ROOM)} / pièce.
+          </span>
         </Field>
 
         <div className="flex items-end">
@@ -183,7 +195,8 @@ export function BookingForm({
             <span className="text-sm">
               <span className="font-medium">Publier aussi sur Roogo</span>
               <span className="block text-black/50">
-                Tarif réduit à {formatFCFA(PRICE_SCAN_WITH_ROOGO)}
+                Économisez 25 % —{" "}
+                {formatFCFA(computePrice(values.room_count, true))} au total
               </span>
             </span>
           </label>

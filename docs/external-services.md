@@ -6,22 +6,33 @@ Reference for every third-party service the Kazedra site depends on, plus the pr
 
 ## Service pricing — 3D virtual tours
 
+Tarification au nombre de pièces (uniforme, aucun minimum).
+
 | Formule | Prix | Inclus |
 |---|---|---|
-| Scan 3D seul | **50 000 FCFA / bien** | Scan sur place, lien de visite Kuula partageable, livraison sous 48 h |
-| Scan 3D + publication sur Roogo | **30 000 FCFA / bien** | Tout le scan + annonce Roogo avec la visite 3D mise en avant |
+| Scan 3D seul | **10 000 FCFA / pièce** | Scan sur place, lien de visite Kuula partageable, livraison sous 72 h |
+| Scan 3D + publication sur Roogo | **7 500 FCFA / pièce** (25 % de réduction) | Tout le scan + annonce Roogo avec la visite 3D mise en avant |
 
-- Unité: par bien scanné.
-- Zone couverte (v1): **Ouagadougou uniquement**.
+- Unité: par pièce (espace à capturer — chambre, salon, salle, bar, zone privée…).
+- Le total est calculé dynamiquement à la réservation selon le nombre de pièces saisi par le client.
+- Zone couverte (v1): **Ouagadougou uniquement**. Les commandes hors zone (ex. Bobo-Dioulasso) sont traitées en bespoke par l'équipe avec frais de déplacement.
 - Paiement: **Mobile Money (Orange ou Moov) au moment de la réservation**, via PawaPay. Le créneau est maintenu 8 minutes pendant le paiement ; passé ce délai sans confirmation, il redevient disponible.
 - Livrable: lien Kuula hébergé, accessible sans installation, partageable sans limite.
 
 Les montants affichés côté site sont définis dans `src/lib/time-slots.ts` :
 
 ```ts
-export const PRICE_SCAN_ONLY = 50000;
-export const PRICE_SCAN_WITH_ROOGO = 30000;
+export const PRICE_PER_ROOM = 10_000;
+export const PRICE_PER_ROOM_WITH_ROOGO = 7_500; // 25% off
+export const ROOGO_DISCOUNT_PCT = 25;
+
+export function computePrice(roomCount: number, withRoogo: boolean): number {
+  const rate = withRoogo ? PRICE_PER_ROOM_WITH_ROOGO : PRICE_PER_ROOM;
+  return Math.max(1, Math.floor(roomCount)) * rate;
+}
 ```
+
+Le serveur recalcule systématiquement le montant à partir du `room_count` validé côté API — le client ne fournit jamais le total, il ne peut donc pas le falsifier.
 
 ---
 
@@ -54,7 +65,7 @@ SUPABASE_SERVICE_ROLE_KEY=...
 Le schéma SQL vit dans `supabase/migrations/0001_bookings.sql`. Exécuter dans le SQL Editor de Supabase.
 
 Points importants :
-- Table `bookings` (id, date, slot, name, company, phone, email, address, area_band, with_roogo, notes, status, created_at).
+- Table `bookings` (id, date, slot, name, company, phone, email, address, room_count, with_roogo, total_amount, notes, status, created_at). La migration `0003_room_count.sql` remplace l'ancienne colonne `area_band` (m²) par `room_count` + `total_amount` qui pilotent la tarification dynamique.
 - Index unique partiel `bookings_active_slot_uniq` sur `(date, slot)` où `status <> 'cancelled'` — empêche toute double-réservation (source de vérité contre les collisions).
 - Vue `booking_slots_view` (date, slot) — exposée en lecture seule au rôle `anon` pour la requête de disponibilité, sans fuite de PII.
 - RLS active sur `bookings`, accès refusé en lecture/écriture — seules les routes API (via la clé `service_role`) peuvent écrire.

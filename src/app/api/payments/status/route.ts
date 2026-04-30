@@ -18,6 +18,8 @@ type DbRow = {
   phone: string;
   address: string;
   with_roogo: boolean;
+  room_count: number;
+  total_amount: number;
   status: string;
   payment_status: string;
   payment_deposit_id: string;
@@ -41,7 +43,7 @@ export async function POST(req: Request) {
   const { data: row, error: fetchErr } = await supabase
     .from("bookings")
     .select(
-      "id, date, slot, name, company, phone, address, with_roogo, status, payment_status, payment_deposit_id"
+      "id, date, slot, name, company, phone, address, with_roogo, room_count, total_amount, status, payment_status, payment_deposit_id"
     )
     .eq("payment_deposit_id", depositId)
     .maybeSingle<DbRow>();
@@ -132,6 +134,8 @@ export async function POST(req: Request) {
           slot: row.slot,
           address: row.address,
           with_roogo: row.with_roogo,
+          room_count: row.room_count,
+          total_amount: row.total_amount,
         }),
       ]).catch((err) =>
         console.error("[payments/status] sms dispatch", err)

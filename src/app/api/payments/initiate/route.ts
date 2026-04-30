@@ -6,7 +6,7 @@ import {
 } from "@/lib/booking-schema";
 import { supabaseService } from "@/lib/supabase";
 import { resolvePawaPayConfig } from "@/lib/pawapay";
-import { PRICE_SCAN_ONLY, PRICE_SCAN_WITH_ROOGO } from "@/lib/time-slots";
+import { computePrice } from "@/lib/time-slots";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -65,7 +65,7 @@ export async function POST(req: Request) {
 
   const contactPhone = normalizePhone(d.phone);
   const payerPhoneFormatted = toPawaPayPhone(d.payment_phone);
-  const amount = d.with_roogo ? PRICE_SCAN_WITH_ROOGO : PRICE_SCAN_ONLY;
+  const amount = computePrice(d.room_count, d.with_roogo);
   const supabase = supabaseService();
 
   // Self-heal: clear expired pending_payment rows for this slot so the unique
@@ -91,8 +91,9 @@ export async function POST(req: Request) {
       phone: contactPhone,
       email: d.email || null,
       address: d.address,
-      area_band: d.area_band,
+      room_count: d.room_count,
       with_roogo: d.with_roogo,
+      total_amount: amount,
       notes: d.notes || null,
       status: "pending_payment",
       payment_status: "pending",
