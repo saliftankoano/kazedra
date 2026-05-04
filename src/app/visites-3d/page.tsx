@@ -3,6 +3,7 @@ import { Header } from "@/sections/Header";
 import { Footer } from "@/sections/Footer";
 import { VisitesHero } from "@/sections/VisitesHero";
 import { VisitesBenefits } from "@/sections/VisitesBenefits";
+import { VisitesRealisations } from "@/sections/VisitesRealisations";
 import { VisitesProcess } from "@/sections/VisitesProcess";
 import { VisitesPricing } from "@/sections/VisitesPricing";
 import { VisitesBooking } from "@/sections/VisitesBooking";
@@ -46,6 +47,7 @@ export default function Visites3DPage() {
       <main>
         <VisitesHero />
         <VisitesBenefits />
+        <VisitesRealisations />
         <VisitesProcess />
         <VisitesPricing />
         <ContactFallback />
