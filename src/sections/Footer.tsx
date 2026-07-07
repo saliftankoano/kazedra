@@ -1,7 +1,8 @@
 import Logo from "@/assets/Kazedra-transparent-blanc.png";
-import { Linkedin, Facebook, Instagram, Youtube } from "lucide-react";
+import { Linkedin, Facebook, Instagram, Youtube, MapPin } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { OFFICE_ADDRESS, OFFICE_MAPS_URL } from "@/lib/office";
 
 type FooterProp = {
   onJoin?: () => void;
@@ -60,9 +61,6 @@ export const Footer: React.FC<FooterProp> = ({
               <Link href="/#contact" className="hover:text-white transition-colors">Contact</Link>
             </>
           )}
-          <Link href="/visites-3d" className="hover:text-white transition-colors">
-            Visites 3D
-          </Link>
           <Link href="/realisations" className="hover:text-white transition-colors">
             Réalisations
           </Link>
@@ -101,6 +99,15 @@ export const Footer: React.FC<FooterProp> = ({
             <Youtube className="h-6 w-6" />
           </a>
         </div>
+        <a
+          href={OFFICE_MAPS_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-6 inline-flex items-center justify-center gap-2 hover:text-white transition-colors"
+        >
+          <MapPin className="h-4 w-4" />
+          {OFFICE_ADDRESS}
+        </a>
         <p className="mt-6">
           &copy; 2024-2026 Kazedra Technologies SARL. Tous droits réservés.
         </p>

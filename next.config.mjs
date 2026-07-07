@@ -1,5 +1,15 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  async redirects() {
+    return [
+      // The 3D visits service moved to the Roogo brand.
+      {
+        source: "/visites-3d",
+        destination: "https://www.roogobf.com/visites-3d",
+        permanent: true,
+      },
+    ];
+  },
   webpack(config) {
     // Grab the existing rule that handles SVG imports
     const fileLoaderRule = config.module.rules.find((rule) =>

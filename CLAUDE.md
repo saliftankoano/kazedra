@@ -15,9 +15,9 @@ There are no test commands configured in this project.
 
 ## Architecture
 
-This is the Next.js 15 (App Router) marketing site for **Kazedra Technologies**, a Burkinabè software company. The home page (`src/app/page.tsx`) is the company landing page. The site also markets Kazedra's productized **3D virtual tour service** at `/visites-3d` (self-serve calendar booking + Mobile Money payment).
+This is the Next.js 15 (App Router) marketing site for **Kazedra Technologies**, a Burkinabè software company. The home page (`src/app/page.tsx`) is the company landing page. The site is dedicated to Kazedra's **software development / consulting** positioning; all real-estate-adjacent branding (including the 3D virtual tour service) lives under the Roogo brand.
 
-Kazedra's main consumer product is **Roogo**, a rental marketplace for residential and commercial properties in Burkina Faso (Android Feb 2026, iOS Apr 2026). Roogo's mobile app code lives in a separate repo — not this one. This site references Roogo as a bundled add-on in the `/visites-3d` pricing (Scan + Roogo bundle).
+Kazedra's main consumer product is **Roogo**, a rental marketplace for residential and commercial properties in Burkina Faso (Android Feb 2026, iOS Apr 2026). Roogo's code lives in separate repos — not this one. The former **3D virtual tour service** (`/visites-3d`) migrated to the Roogo site in July 2026; this site now 308-redirects `/visites-3d` to `https://www.roogobf.com/visites-3d` (see `next.config.mjs`).
 
 The home page's section structure (`Hero → LogoTicker → Why → Pricing → Testimonials → Waitlist → Footer`) was originally built as the waitlist for an AI clothing-generation product, since pivoted. The disabled RunPod/ComfyUI route at `src/app/api/generate/route.ts` and the `RUNPOD_API_KEY` env var are leftovers from that era.
 
@@ -36,15 +36,6 @@ Each section lives in `src/sections/`. The page passes refs to `Header` so nav l
 - `src/app/api/checkout_sessions/route.js` — Stripe subscription checkout session creation
 - `src/app/api/webhooks.js` — Stripe webhook handler
 - `src/app/api/generate/route.ts` — ComfyUI/RunPod clothing generation (currently commented out/disabled)
-- `src/app/api/bookings/route.ts` — Deprecated (returns 410 Gone). Superseded by `/api/payments/initiate`.
-- `src/app/api/bookings/availability/route.ts` — Read-only slot availability for the `/visites-3d` calendar
-- `src/app/api/payments/initiate/route.ts` — Creates a `pending_payment` booking and opens a PawaPay deposit (Mobile Money)
-- `src/app/api/payments/status/route.ts` — Client poll endpoint; DB-first, falls back to PawaPay `/v2/deposits/{id}`
-- `src/app/api/pawapay/callback/route.ts` — PawaPay webhook (IP-whitelisted in prod); flips booking to `confirmed` on `COMPLETED` and fires SMS
-
-### 3D virtual tours (`/visites-3d`)
-
-Marketing + booking page for the on-site 3D scan service. Sections live in `src/sections/Visites*.tsx`, booking UI in `src/components/booking/` (incl. `PaymentModal.tsx` for the Mobile Money flow), shared helpers in `src/lib/time-slots.ts`, `src/lib/booking-schema.ts`, `src/lib/supabase.ts`, `src/lib/africastalking.ts`, `src/lib/pawapay.ts`. Supabase schema is at `supabase/migrations/0001_bookings.sql` + `0002_payments.sql` (PawaPay columns, status extension, view update). Paiement obligatoire Mobile Money à la réservation via PawaPay (Orange + Moov), hold 8 min. See `docs/external-services.md` for pricing, SMS costs, PawaPay details, Supabase schema, and env vars.
 
 ### Styling
 
@@ -65,10 +56,8 @@ Required in `.env.local` (not committed):
 - `STRIPE_SECRET_KEY`
 - `STRIPE_WEBHOOK_SECRET`
 - `RUNPOD_API_KEY` (for the disabled clothing generation feature)
-- `NEXT_PUBLIC_SUPABASE_URL` / `NEXT_PUBLIC_SUPABASE_ANON_KEY` / `SUPABASE_SERVICE_ROLE_KEY` (3D tour bookings)
-- `AT_USERNAME` / `AT_API_KEY` / `AT_SENDER_ID` (optional) (Africa's Talking SMS)
-- `TEAM_PHONE` (in `+226XXXXXXXX` format — where team SMS notifications go)
-- `PAWAPAY_LOCAL_MODE` (`sandbox` | `live`) / `PAWAPAY_SANDBOX_URL` / `PAWAPAY_SANDBOX_API_TOKEN` / `PAWAPAY_LIVE_URL` / `PAWAPAY_LIVE_API_TOKEN` (Mobile Money deposits for 3D tour bookings; prod forces live)
+
+(Supabase, Africa's Talking, and PawaPay vars were removed when the 3D visits service migrated to roogo-web — delete them from the hosting env too.)
 
 ### Path Alias
 

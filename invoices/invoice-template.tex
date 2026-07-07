@@ -1,0 +1,210 @@
+% ============================================================
+%  KAZEDRA TECHNOLOGIES — Modèle de facture
+%  Compile with:  xelatex invoice-template.tex
+%  (Engine: XeLaTeX — works in Overleaf out of the box.)
+%
+%  Pour utiliser:
+%   1. Dupliquer ce fichier:  cp invoice-template.tex 2026-05-05-client.tex
+%   2. Modifier UNIQUEMENT le bloc « EDIT THIS » ci-dessous
+%   3. Compiler:               xelatex 2026-05-05-client.tex
+% ============================================================
+
+\documentclass[11pt,a4paper]{article}
+
+% ---------- Engine + langue ----------
+\usepackage{fontspec}
+\usepackage[french]{babel}
+
+% ---------- Mise en page ----------
+\usepackage[margin=2cm,top=1.6cm,bottom=2cm]{geometry}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{colortbl}
+\usepackage{ragged2e}
+\usepackage{hyperref}
+\usepackage{eso-pic}
+
+% ---------- Couleurs de marque Kazedra ----------
+\definecolor{kazedraOrange}{HTML}{FF6B35}
+\definecolor{kazedraDark}{HTML}{5C2D0C}
+\definecolor{kazedraInk}{HTML}{1A1A1A}
+\definecolor{kazedraMuted}{HTML}{6B6B6B}
+\definecolor{kazedraCream}{HTML}{FFF8F0}
+\definecolor{kazedraRule}{HTML}{E5E5E5}
+
+% ---------- Typographie ----------
+% TeX Gyre Heros = clone Helvetica fourni avec TeX Live & Overleaf.
+% Pour utiliser Urbanist (police de marque), installe-la et remplace par:
+%   \setmainfont{Urbanist}
+\setmainfont{TeX Gyre Heros}
+
+\setlength{\parindent}{0pt}
+\hypersetup{colorlinks=true, urlcolor=kazedraOrange, linkcolor=kazedraDark}
+
+% ============================================================
+% ===================  EDIT THIS BLOCK  ======================
+% ============================================================
+
+% ---- Identifiant facture ----
+\newcommand{\invoiceNumber}{KZD-2026-001}
+% Date: \today donne la date de compilation. Pour une facture archivée,
+% remplacer par une date littérale, ex: {5 mai 2026}
+\newcommand{\invoiceDate}{\today}
+\newcommand{\dueDate}{À réception}
+
+% ---- Client ----
+\newcommand{\clientName}{Restaurant Rosa Dei Venti}
+\newcommand{\clientAddressOne}{Avenue ...}
+\newcommand{\clientAddressTwo}{Ouagadougou, Burkina Faso}
+\newcommand{\clientContact}{Nom du contact}
+\newcommand{\clientEmail}{contact@client.com}
+\newcommand{\clientPhone}{+226 XX XX XX XX}
+
+% ---- Prestation ----
+% Description multi-lignes acceptée (utiliser \\ entre les lignes).
+\newcommand{\itemDescription}{Visite virtuelle 3D --- capture par pièce \newline {\small\color{kazedraMuted}Insta360 + hébergement Kuula --- livraison 72\,h}}
+\newcommand{\itemQty}{5}
+\newcommand{\itemUnitPrice}{10\,000~FCFA}
+\newcommand{\itemSubtotal}{50\,000~FCFA}
+
+% ---- Remise éventuelle ----
+% Pour PAS de remise: laisser \discountRow vide.
+% Pour une remise (ex: bundle Roogo 25 %), décommenter la ligne ci-dessous
+% et adapter les montants:
+%
+%   \renewcommand{\discountRow}{Remise bundle Roogo (25\,\%) & -12\,500~FCFA \\}
+\newcommand{\discountRow}{}
+
+% ---- Montants finaux ----
+\newcommand{\subtotalAmount}{50\,000~FCFA}
+\newcommand{\totalAmount}{50\,000~FCFA}
+
+% ---- Modalités de paiement ----
+\newcommand{\payHolder}{Kazedra Technologies}
+\newcommand{\payOrange}{XX XX XX XX}
+\newcommand{\payMoov}{XX XX XX XX}
+
+% ---- Notes (libre, optionnel) ----
+\newcommand{\invoiceNotes}{Le lien Kuula vous sera transmis dès réception du paiement, dans le délai de livraison de 72\,h.}
+
+% ============================================================
+% ==================  END EDIT THIS BLOCK  ===================
+% ============================================================
+
+\pagestyle{empty}
+
+\begin{document}
+
+% ----------------------------- HEADER -----------------------------
+\noindent
+\begin{minipage}[c]{0.45\textwidth}
+  \includegraphics[height=2.0cm]{kazedra-logo.png}
+\end{minipage}\hfill
+\begin{minipage}[c]{0.5\textwidth}
+  \RaggedLeft
+  {\large\bfseries\color{kazedraInk} Kazedra Technologies}\\[2pt]
+  {\small\color{kazedraMuted}
+    Ouagadougou, Burkina Faso\\
+    \href{mailto:hello@kazedra.com}{hello@kazedra.com}\\
+    +226 XX XX XX XX\\
+    \href{https://kazedra.com}{kazedra.com}}
+\end{minipage}
+
+\vspace{1.4cm}
+
+% ----------------------------- TITLE -----------------------------
+\noindent
+{\fontsize{34}{38}\selectfont\bfseries\color{kazedraOrange} FACTURE}
+
+\vspace{0.15cm}
+\noindent\textcolor{kazedraOrange}{\rule{\textwidth}{1.5pt}}
+\vspace{0.5cm}
+
+% ----------------------------- META + CLIENT -----------------------------
+\noindent
+\begin{minipage}[t]{0.55\textwidth}
+  \vspace{0pt}
+  {\small\color{kazedraMuted} FACTURÉ À}\\[4pt]
+  {\bfseries\large \clientName}\\[2pt]
+  \clientAddressOne\\
+  \clientAddressTwo\\[4pt]
+  {\small \clientContact \\
+  \href{mailto:\clientEmail}{\clientEmail} \\
+  \clientPhone}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.4\textwidth}
+  \vspace{0pt}
+  \RaggedLeft
+  \begin{tabular}{r@{\quad}l}
+    {\small\color{kazedraMuted}Facture N\textsuperscript{o}} & \textbf{\invoiceNumber}\\[4pt]
+    {\small\color{kazedraMuted}Date d'émission}              & \invoiceDate\\[4pt]
+    {\small\color{kazedraMuted}Échéance}                     & \dueDate\\
+  \end{tabular}
+\end{minipage}
+
+\vspace{1.2cm}
+
+% ----------------------------- LINE ITEMS -----------------------------
+\renewcommand{\arraystretch}{1.5}
+\arrayrulecolor{kazedraRule}
+
+\noindent
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}X r r r}
+  \arrayrulecolor{kazedraOrange}\hline
+  \rowcolor{kazedraCream}
+  \textbf{Description} & \textbf{Qté} & \textbf{Prix unitaire} & \textbf{Montant} \\
+  \arrayrulecolor{kazedraRule}\hline
+  \itemDescription & \itemQty & \itemUnitPrice & \itemSubtotal \\
+  \hline
+\end{tabularx}
+
+\vspace{0.6cm}
+
+% ----------------------------- TOTALS -----------------------------
+\noindent\hfill
+\begin{minipage}{0.5\textwidth}
+  \renewcommand{\arraystretch}{1.4}
+  \begin{tabularx}{\textwidth}{X r}
+    Sous-total & \subtotalAmount \\
+    \discountRow
+    \arrayrulecolor{kazedraOrange}\hline
+    \textbf{\large TOTAL À PAYER} & {\bfseries\large\color{kazedraOrange} \totalAmount} \\
+  \end{tabularx}
+\end{minipage}
+
+\vspace{1.4cm}
+
+% ----------------------------- PAYMENT INFO -----------------------------
+\noindent
+{\bfseries\color{kazedraDark}\large MODALITÉS DE PAIEMENT}\\[4pt]
+\textcolor{kazedraRule}{\rule{\textwidth}{0.5pt}}\\[8pt]
+{\small Mobile Money à l'ordre de \textbf{\payHolder}~:}\\[6pt]
+\hspace{1em}\textcolor{kazedraOrange}{$\bullet$}~ Orange Money~: \textbf{\payOrange}\\[2pt]
+\hspace{1em}\textcolor{kazedraOrange}{$\bullet$}~ Moov Money~: \textbf{\payMoov}
+
+\vspace{0.8cm}
+
+% ----------------------------- NOTES -----------------------------
+\noindent
+{\bfseries\color{kazedraDark} NOTES}\\[4pt]
+\textcolor{kazedraRule}{\rule{\textwidth}{0.5pt}}\\[6pt]
+{\small \invoiceNotes}
+
+\vspace{1cm}
+
+\noindent
+\begin{center}
+{\itshape\color{kazedraDark} Merci pour votre confiance.}
+\end{center}
+
+\vfill
+
+% ----------------------------- FOOTER -----------------------------
+\noindent\textcolor{kazedraRule}{\rule{\textwidth}{0.5pt}}\\[4pt]
+{\footnotesize\color{kazedraMuted}
+Kazedra Technologies --- Visites virtuelles 3D pour l'immobilier, l'hôtellerie et la restauration.\\
+Insta360 + Kuula --- Livraison sous 72\,h --- Zone de service: Ouagadougou. \href{https://kazedra.com}{kazedra.com}}
+
+\end{document}

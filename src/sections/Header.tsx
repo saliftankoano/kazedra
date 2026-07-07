@@ -107,9 +107,6 @@ export const Header: React.FC<HeaderProp> = ({
                   </Link>
                 </>
               )}
-              <Link href="/visites-3d" className={navLinkClass}>
-                Visites 3D
-              </Link>
               <Link href="/realisations" className={navLinkClass}>
                 Réalisations
               </Link>
