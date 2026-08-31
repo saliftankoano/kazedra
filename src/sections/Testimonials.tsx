@@ -24,7 +24,7 @@ const team = [
   {
     role: "Directeur des Ventes",
     imageSrc: null,
-    name: "Aroun Zerbo",
+    name: "Nanema Cosmos Ezechiel Don De DIEU",
     description:
       "Responsable du développement commercial et de la satisfaction de nos partenaires.",
   },
