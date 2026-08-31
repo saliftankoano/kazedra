@@ -22,9 +22,16 @@ const team = [
       "Expert en communication stratégique, il porte la voix et les valeurs de Kazedra.",
   },
   {
+    role: "Directeur Marketing",
+    imageSrc: null,
+    name: "Nanema Cosmos Ezechiel Don De DIEU",
+    description:
+      "Responsable de la stratégie marketing, de la marque et de l'acquisition.",
+  },
+  {
     role: "Directeur des Ventes",
     imageSrc: null,
-    name: "Aroun Zerbo",
+    name: "Boukaré Zagré",
     description:
       "Responsable du développement commercial et de la satisfaction de nos partenaires.",
   },
@@ -51,7 +58,7 @@ export const Testimonials: React.FC<refProp> = ({ refProp }) => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-16">
           {team.map(({ role, imageSrc, name, description }, index) => (
             <div
               key={index}
